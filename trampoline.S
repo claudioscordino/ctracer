@@ -1,7 +1,4 @@
-.global mcount
-.global trace_stub
-
-        .macro MCOUNT_SAVE_FRAME
+.macro MCOUNT_SAVE_FRAME
         subq $0x38, %rsp
         movq %rax, (%rsp)
         movq %rcx, 8(%rsp)
@@ -10,9 +7,9 @@
         movq %rdi, 32(%rsp)
         movq %r8, 40(%rsp)
         movq %r9, 48(%rsp)
-        .endm
+.endm
 
-        .macro MCOUNT_RESTORE_FRAME
+.macro MCOUNT_RESTORE_FRAME
         movq 48(%rsp), %r9
         movq 40(%rsp), %r8
         movq 32(%rsp), %rdi
@@ -21,9 +18,11 @@
         movq 8(%rsp), %rcx
         movq (%rsp), %rax
         addq $0x38, %rsp
-        .endm
+.endm
 
 
+.global mcount
+.global notrace_stub
 
 mcount:
 	MCOUNT_SAVE_FRAME
@@ -37,6 +36,6 @@ mcount:
 
 	MCOUNT_RESTORE_FRAME
 
-trace_stub:
+notrace_stub:
 	retq
 

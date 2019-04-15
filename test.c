@@ -6,10 +6,6 @@
 
 void notrace_stub(unsigned long ip, unsigned long parent_ip);
 
-
-extern int func1(int x);
-extern int func2 (int a);
-
 typedef void (*trace_func_t)(unsigned long ip, unsigned long parent_ip);
 void trace_function(unsigned long ip, __attribute__((unused)) unsigned long parent_ip)
 {
@@ -20,15 +16,14 @@ void trace_function(unsigned long ip, __attribute__((unused)) unsigned long pare
 
 trace_func_t trace_ptr __attribute__((__section__(".data.read_mostly"))) = notrace_stub;
 
-
-int main (void)
+void tracer_enable(void)
 {
-	printf("Running...\n");
 	trace_ptr = &trace_function;
-	func2(100);
-	return 0;
 }
 
-
+void tracer_disable(void)
+{
+	trace_ptr = notrace_stub;
+}
 
 

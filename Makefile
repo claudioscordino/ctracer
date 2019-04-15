@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS= -O0 -Wall -Wextra -g
+FLAGS= -Wall -Wextra -g
 CFLAGS= $(FLAGS)  #-g #--static #-fPIE #-mcmodel=large #-fPIC #-v
 ASFLAGS=$(FLAGS)
 LDFLAGS=$(FLAGS) --static

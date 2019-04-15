@@ -16,7 +16,7 @@ volatile int i = 0;
 typedef void (*trace_func_t)(unsigned long ip, unsigned long parent_ip);
 void trace_function(unsigned long ip, unsigned long parent_ip)
 {
-	printf("ip = %lu, parent_ip = %lu\n", ip, parent_ip);
+	printf("address of called function = %lx, return address = %lx\n", ip, parent_ip);
 	++i;
 }
 

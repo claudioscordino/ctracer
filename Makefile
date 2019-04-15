@@ -5,17 +5,17 @@ ASFLAGS=$(FLAGS)
 LDFLAGS=$(FLAGS) --static
 TRACEFLAGS= -pg #--static #-fPIE #-mcmodel=large #-fPIC #-v
 
-all: clean test
+all: clean main
 
-test: test.o traced.o trampoline.o
+main: trace.o main.o trampoline.o
 
-test.o: test.c
+trace.o: trace.c
 
-traced.o: traced.c
-	$(CC) $(CFLAGS) $(TRACEFLAGS) -c -o traced.o traced.c
+main.o: main.c
+	$(CC) $(CFLAGS) $(TRACEFLAGS) -c -o main.o main.c
 
 trampoline.o: trampoline.S
 
 clean:
-	rm -fr test *.o *.out
+	rm -fr main *.o *.out
 

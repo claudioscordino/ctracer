@@ -3,58 +3,34 @@
 #include <unistd.h>
 #include <stdint.h>
 
-//void trace(unsigned long ip, unsigned long parent_ip)
-
-
+// In ASM:
 extern void mcount (void);
+void trace_stub(unsigned long ip, unsigned long parent_ip);
 
-#if 0
-void __mcount(void)
+
+extern int func1(int x);
+extern int func2 (int a);
+
+volatile int i = 0;
+
+typedef void (*trace_func_t)(unsigned long ip, unsigned long parent_ip);
+void trace_function(unsigned long ip, unsigned long parent_ip)
 {
-asm volatile (
-	// Save frame
-        " subq $0x38, %rsp    \n"
-        " movq %rax, (%rsp)   \n"
-        " movq %rcx, 8(%rsp)  \n"
-        " movq %rdx, 16(%rsp) \n"
-        " movq %rsi, 24(%rsp) \n"
-        " movq %rdi, 32(%rsp) \n"
-        " movq %r8, 40(%rsp)  \n"
-        " movq %r9, 48(%rsp)  \n"
-
-	// Restore frame
-        " movq 48(%rsp), %r9  \n"
-        " movq 40(%rsp), %r8  \n"
-        " movq 32(%rsp), %rdi \n"
-        " movq 24(%rsp), %rsi \n"
-        " movq 16(%rsp), %rdx \n"
-        " movq 8(%rsp), %rcx  \n"
-        " movq (%rsp), %rax   \n"
-        " addq $0x38, %rsp    \n"
-);
-}
-#endif
-
-int func1(int x)
-{
-	return --x;
+	printf("ip = %lu, parent_ip = %lu\n", ip, parent_ip);
+	++i;
 }
 
-int func2 (int a)
-{
-	int b = func1(a);
-	b++;
-	if (b > 10)
-		return b;
-	else
-		return --b;
-}
+trace_func_t trace_ptr __attribute__((__section__(".data.read_mostly"))) = trace_stub;
 
 
 int main (void)
 {
 	printf("Running...\n");
-	return func2(100);
+	trace_ptr = &trace_function;
+	printf("i = %d\n", i);
+	func2(100);
+	printf("i = %d\n", i);
+	return 0;
 }
 
 

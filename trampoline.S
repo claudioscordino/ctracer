@@ -22,8 +22,6 @@
 
 
 .global mcount
-.global notrace_stub
-
 mcount:
 	MCOUNT_SAVE_FRAME
 
@@ -32,10 +30,8 @@ mcount:
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
 	subq $0xe, %rdi // This is the size of the mcount call
 
-	call *trace_ptr
+	call trace_function
 
 	MCOUNT_RESTORE_FRAME
-
-notrace_stub:
 	retq
 

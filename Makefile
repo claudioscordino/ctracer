@@ -1,11 +1,12 @@
 CC=gcc
 FLAGS= -Wall -Wextra -g
-CFLAGS= $(FLAGS)  #-g #--static #-fPIE #-mcmodel=large #-fPIC #-v
+CFLAGS= $(FLAGS)
 ASFLAGS=$(FLAGS)
 LDFLAGS=$(FLAGS) --static
-TRACEFLAGS= -pg #--static #-fPIE #-mcmodel=large #-fPIC #-v
+TRACEFLAGS= -pg
 
-all: clean main
+all: clean main main.dump
+
 
 main: trace.o main.o trampoline.o
 
@@ -16,6 +17,11 @@ main.o: main.c
 
 trampoline.o: trampoline.S
 
+main.dump: main
+	objdump -S -D main > main.dump
+
+.PHONY: clean
 clean:
 	rm -fr main *.o *.out
+
 

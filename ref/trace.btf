@@ -1,0 +1,55 @@
+#version 2.2.0
+#creator Claudio Scordino
+#creationDate 2014-02-19T11:39:20Z
+#timeScale ns
+10,Core_1,0,T,TASK_A,0,start
+30,TASK_A,1,R,func1,1,start
+250,TASK_A,1,R,func1,1,suspend
+500,TASK_A,1,R,func1,1,resume
+750,TASK_A,1,R,func1,1,terminate
+1000,TASK_A,2,R,func1,2,start
+1250,TASK_A,2,R,func1,2,suspend
+1500,TASK_A,2,R,func1,2,resume
+1750,TASK_A,2,R,func1,2,terminate
+2000,TASK_A,3,R,func1,3,start
+2250,TASK_A,3,R,func1,3,suspend
+2500,TASK_A,3,R,func1,3,resume
+2750,TASK_A,3,R,func1,3,terminate
+3000,TASK_A,4,R,func1,4,start
+3250,TASK_A,4,R,func1,4,terminate
+3250,TASK_A,1,R,func2,1,start
+3750,TASK_A,1,R,func2,1,terminate
+3750,Core_1,0,T,TASK_A,0,terminate
+3750,Core_1,0,C,Core_1,0,idle
+4000,Core_1,0,T,TASK_A,0,start
+4000,TASK_A,5,R,func1,5,start
+4250,TASK_A,5,R,func1,5,terminate
+4250,TASK_A,5,R,func2,5,start
+4750,TASK_A,5,R,func2,5,terminate
+
+
+
+
+# 0,Task_A,  ,T, Task_A,     1  , activate
+# 1,Core_1,  ,T, Task_A,     1  , start
+# 2,Task_A,  ,R, Runnable_1,     1  , start
+# 4,Task_A,  ,R, Runnable_1,     1  , terminate
+# 6,Task_A,  ,R, Runnable_2,     1  , start
+# 8,Task_A,  ,R, Runnable_2,     1  , terminate
+# 10,Task_A,  ,T, Task_B,   1    , activate
+# 11,Core_1,  ,T, Task_A,    1   , terminate
+# 11,Core_1,  ,T, Task_B,     1  , start
+# 12,Task_B,  ,R, Runnable_3,   1    , start
+# 14,Task_B,  ,R, Runnable_3,    1   , terminate
+# 16,Task_B,  ,R, Runnable_4,    1   , start
+# 18,Task_B,  ,R, Runnable_4,     1  , terminate
+# 20,Core1, 0 ,R, Runnable_A_2, 0, activate
+# 100,Core0, 0,R, Runnable_A_1, 0, start
+# 6766,Core1,0 ,R, Runnable_A_1, 0, terminate
+# 6766,Core0,0 ,R, Runnable_A_2, 0, start
+# 10000,Core1,0,T, Task_B,       0, activate
+# 10100,Core0,0,R, Runnable_A_2, 0, suspend
+# 10100,Core1,0,R, Runnable_B_1, 0, start
+# 16766,Core0,0,R, Runnable_B_1, 0, terminate
+# 16866,Core1,0,R, Runnable_A_2, 0, resume
+# 20199,Core1,0,R, Runnable_A_2, 0, terminate

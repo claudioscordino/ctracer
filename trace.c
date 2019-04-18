@@ -9,6 +9,5 @@ void trace_function(unsigned long ip, __attribute__((unused)) unsigned long pare
 {
 	struct timespec ts;
 	clock_gettime(CLOCK_MONOTONIC, &ts);
-	printf("[%lu.%lu]\t Function called: 0x%lx\n", ts.tv_sec, ts.tv_nsec, ip);
+	printf("TRACE\t%lu%lu\t0x%lx\n", ts.tv_sec, ts.tv_nsec, ip);
 }
-

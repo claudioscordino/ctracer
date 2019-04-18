@@ -5,7 +5,7 @@ ASFLAGS=$(FLAGS)
 LDFLAGS=$(FLAGS) --static
 TRACEFLAGS= -pg
 
-all: clean main main.dump
+all: clean main
 
 
 main: trace.o main.o trampoline.o
@@ -16,9 +16,6 @@ main.o: main.c
 	$(CC) $(CFLAGS) $(TRACEFLAGS) -c -o main.o main.c
 
 trampoline.o: trampoline.S
-
-main.dump: main
-	objdump -S -D main > main.dump
 
 .PHONY: clean
 clean:

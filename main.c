@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <stdint.h>
 
+#include "ctracer.h"
+
 int func1(int x)
 {
 	fprintf(stderr, "Running func1 %p...\n", func1);
@@ -32,7 +34,10 @@ int func3()
 int main (void)
 {
 	fprintf(stderr, "Running main %p...\n", main);
+	ctracer_enable();
 	func2(100);
+	func3();
+	ctracer_disable();
 	func3();
 	return 0;
 }

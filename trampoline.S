@@ -21,6 +21,8 @@
 
 .global mcount
 mcount:
+	cmpq $trace_function, ctracer_ptr
+	jnz end
 	MCOUNT_SAVE_FRAME
 
 	// In 64-bit mode, the first two arguments go to rdi and rsi
@@ -28,8 +30,9 @@ mcount:
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
 	subq $0xa, %rdi // This is the size of the mcount call (taken empirically by looking at main)
 
-	call trace_function
+	call *ctracer_ptr
 
 	MCOUNT_RESTORE_FRAME
+end:
 	retq
 

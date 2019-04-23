@@ -8,9 +8,9 @@ TRACEFLAGS= -pg
 all: clean main
 
 
-main: trace.o main.o trampoline.o
+main: ctracer.o main.o trampoline.o
 
-trace.o: trace.c
+ctracer.o: ctracer.c
 
 main.o: main.c
 	$(CC) $(CFLAGS) $(TRACEFLAGS) -c -o main.o main.c
@@ -19,6 +19,6 @@ trampoline.o: trampoline.S
 
 .PHONY: clean
 clean:
-	rm -fr main *.o *.out
+	rm -fr main *.o *.out *.btf
 
 

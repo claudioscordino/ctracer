@@ -7,13 +7,13 @@
 
 int func1(int x)
 {
-	fprintf(stderr, "Running func1 %p...\n", func1);
+	fprintf(stderr, "Running func1 %p with args %d...\n", func1, x);
 	return --x;
 }
 
 int func2 (int a)
 {
-	fprintf(stderr, "Running func2 %p...\n", func2);
+	fprintf(stderr, "Running func2 %p with args %d...\n", func2, a);
 	int b = func1(a);
 	b++;
 	if (b > 10)
@@ -39,6 +39,7 @@ int main (void)
 	func3();
 	ctracer_disable();
 	func3();
+	trace_dump();
 	return 0;
 }
 

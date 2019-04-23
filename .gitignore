@@ -1,4 +1,6 @@
 *.o
 *.dump
 *.btf
+*.dat
 !*/*.btf
+main

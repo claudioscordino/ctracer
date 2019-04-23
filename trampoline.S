@@ -25,7 +25,18 @@ mcount:
 	jnz end
 	MCOUNT_SAVE_FRAME
 
-	// In 64-bit mode, the first two arguments go to rdi and rsi
+	// According to the x86-64 ABI, the first 6 integer/pointer arguments
+	// are passed in registers:
+	// 1. %rdi
+	// 2. %rsi
+	// 3. %rdx
+	// 4. %rcx
+	// 5. %r8
+	// 6. %r9
+	movq %rcx, %r9
+	movq %rdx, %r8
+	movq %rsi, %rcx
+	movq %rdi, %rdx
         movq 0x38(%rsp), %rdi
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
 	subq $0xa, %rdi // This is the size of the mcount call (taken empirically by looking at main)

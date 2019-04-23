@@ -15,6 +15,5 @@ at can be viewed through [Eclipse Trace Compass](https://www.eclipse.org/traceco
 TODO
 ====
 * Data structure for saving information at the end of execution
-* Get and save function arguments
 * Hijack trampoline to be called when the function ends execution
 * Port to ERIKA Enterprise

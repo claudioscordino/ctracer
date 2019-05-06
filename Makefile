@@ -1,23 +1,21 @@
 CC=gcc
-FLAGS= -Wall -Wextra -g
+FLAGS= -Wall -Wextra -g -pg
 CFLAGS= $(FLAGS)
 ASFLAGS=$(FLAGS)
 LDFLAGS=$(FLAGS) --static
-TRACEFLAGS= -pg
+
+.PHONY: clean all
 
 all: clean main
-
 
 main: ctracer.o main.o trampoline.o
 
 ctracer.o: ctracer.c
 
 main.o: main.c
-	$(CC) $(CFLAGS) $(TRACEFLAGS) -c -o main.o main.c
 
 trampoline.o: trampoline.S
 
-.PHONY: clean
 clean:
 	rm -fr main *.o *.out *.btf
 

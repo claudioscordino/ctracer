@@ -22,6 +22,7 @@ struct event {
 struct event data [LOG_SIZE];
 uint16_t curr = 0;
 
+__attribute__ ((no_instrument_function))
 void trace_function(uint64_t ip, uint64_t parent_ip, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4)
 {
 	struct timespec ts;
@@ -37,6 +38,7 @@ void trace_function(uint64_t ip, uint64_t parent_ip, uint64_t arg1, uint64_t arg
 	curr=(curr+1)%LOG_SIZE;
 }
 
+__attribute__ ((no_instrument_function))
 void trace_dump()
 {
 	FILE *fd = fopen ("trace.dat", "w+");

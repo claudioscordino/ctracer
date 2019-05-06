@@ -64,6 +64,8 @@ void trace_dump()
 
 
 typedef void (*ctracer_func_t)(uint64_t ip, uint64_t parent_ip, uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4);
+
+// Set equal to &trace_function from tracing from beginning (e.g. main function)
 ctracer_func_t ctracer_ptr __attribute__((__section__(".data.read_mostly"))) = NULL;
 
 void ctracer_enable(void)

@@ -39,7 +39,7 @@ mcount:
 	movq %rdi, %rdx
         movq 0x38(%rsp), %rdi
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
-	subq $0xa, %rdi // This is the size of the mcount call (taken empirically by looking at main)
+	subq $0xe, %rdi // This is the size of the mcount call (taken empirically by looking at main)
 
 	call *ctracer_ptr
 

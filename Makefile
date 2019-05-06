@@ -17,6 +17,6 @@ main.o: main.c
 trampoline.o: trampoline.S
 
 clean:
-	rm -fr main *.o *.out *.btf
+	rm -fr main *.o *.out *.btf *.dat
 
 

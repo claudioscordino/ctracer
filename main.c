@@ -27,7 +27,7 @@ int func3()
 	fprintf(stderr, "Running func3 %p...\n", func3);
 	func1(1000);
 	func2(200);
-	return 0;
+	return 10;
 }
 
 
@@ -36,9 +36,10 @@ int main (void)
 	fprintf(stderr, "Running main %p...\n", main);
 	ctracer_enable();
 	func2(100);
-	func3();
+	int ret = func3();
+	fprintf(stderr, "func3() returned %d\n", ret);
 	ctracer_disable();
-	func3();
+	ret = func3();
 	trace_dump();
 	return 0;
 }

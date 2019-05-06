@@ -7,12 +7,22 @@ for [ERIKA Enterprise](http://www.erika-enterprise.com).
 The tracer is roughly based on the ftrace approach (i.e. mcount function of
 gcc, enabled through the `-pg` option).
 
-The simple `run.py` script converts the trace to the
+Example of usage
+================
+
+Once compiled (type `make`) the `./main` executable writes a `trace.dat` file
+containing symbols and timestamps:
+
+    ./main
+
+Then, the `create_trace.py` script can convert the trace to the
 [BTF format](https://www.eclipse.org/app4mc/docu/standards/TA_BTF_Specification_2.1.5.pdf),
-t
-at can be viewed through [Eclipse Trace Compass](https://www.eclipse.org/tracecompass/).
+that can be viewed through [Eclipse Trace Compass](https://www.eclipse.org/tracecompass/):
+
+    ./create_trace.py ./main trace.dat
 
 TODO
 ====
 * Hijack trampoline to be called when the function ends execution
+* Port to aarch64
 * Port to ERIKA Enterprise

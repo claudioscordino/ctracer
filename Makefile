@@ -8,13 +8,23 @@ LDFLAGS=$(FLAGS) --static
 
 all: clean main
 
-main: ctracer.o main.o trampoline.o
+ifeq ($(shell gcc -dumpmachine | sed -e "s/-linux-gnu//"), x86_64)
+MESSAGE := "machine = x86_64"
+
+TRAMPOLINE := trampoline-x86-64
+else
+MESSAGE := "machine = other"
+
+TRAMPOLINE := trampoline-aarch64
+endif
+
+$(TRAMPOLINE).o: $(TRAMPOLINE).S
 
 ctracer.o: ctracer.c
 
 main.o: main.c
 
-trampoline.o: trampoline.S
+main: ctracer.o main.o $(TRAMPOLINE).o
 
 clean:
 	rm -fr main *.o *.out *.btf *.dat

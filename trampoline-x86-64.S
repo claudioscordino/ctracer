@@ -1,3 +1,4 @@
+// XXX: x86-64 needs 16-byte stack alignment
 .macro MCOUNT_SAVE_FRAME
 	pushq %rax
 	pushq %rcx
@@ -6,9 +7,11 @@
 	pushq %rdi
 	pushq %r8
 	pushq %r9
+	subq $8, %rsp
 .endm
 
 .macro MCOUNT_RESTORE_FRAME
+	addq $8, %rsp
 	popq %r9
 	popq %r8
 	popq %rdi
@@ -37,7 +40,7 @@ mcount:
 	movq %rdx, %r8
 	movq %rsi, %rcx
 	movq %rdi, %rdx
-        movq 0x38(%rsp), %rdi
+        movq 0x40(%rsp), %rdi
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
 	subq $0xe, %rdi // This is the size of the mcount call (taken empirically by looking at main)
 

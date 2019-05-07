@@ -1,5 +1,5 @@
 // XXX: x86-64 needs 16-byte stack alignment
-.macro MCOUNT_SAVE_FRAME
+.macro SAVE_FRAME
 	pushq %rax
 	pushq %rcx
 	pushq %rdx
@@ -10,7 +10,7 @@
 	subq $8, %rsp
 .endm
 
-.macro MCOUNT_RESTORE_FRAME
+.macro RESTORE_FRAME
 	addq $8, %rsp
 	popq %r9
 	popq %r8
@@ -22,11 +22,11 @@
 .endm
 
 
-.global mcount
-mcount:
+.global __fentry__
+__fentry__:
 	cmpq $trace_function, ctracer_ptr
 	jnz end
-	MCOUNT_SAVE_FRAME
+	SAVE_FRAME
 
 	// According to the x86-64 ABI, the first 6 integer/pointer arguments
 	// are passed in registers:
@@ -42,11 +42,11 @@ mcount:
 	movq %rdi, %rdx
         movq 0x40(%rsp), %rdi
         movq 8(%rbp), %rsi // rbp + 8 contains the return address written in the stack frame
-	subq $0xe, %rdi // This is the size of the mcount call (taken empirically by looking at main)
+	subq $6, %rdi // This is the size of the __fentry__ call (taken empirically by looking at main)
 
 	call *ctracer_ptr
 
-	MCOUNT_RESTORE_FRAME
+	RESTORE_FRAME
 end:
 	retq
 

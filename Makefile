@@ -1,20 +1,19 @@
 CC=gcc
-FLAGS= -Wall -Wextra -g -pg
-CFLAGS= $(FLAGS)
-ASFLAGS=$(FLAGS)
-LDFLAGS=$(FLAGS) --static
+FLAGS  = -Wall -Wextra -g -pg
+CFLAGS = $(FLAGS)
+ASFLAGS= $(FLAGS)
+LDFLAGS= $(FLAGS) --static
 
 .PHONY: clean all
 
 all: clean main
 
 ifeq ($(shell gcc -dumpmachine | sed -e "s/-linux-gnu//"), x86_64)
-MESSAGE := "machine = x86_64"
-
+CFLAGS   += -mfentry
+ASFLAGS  += -mfentry
+LDCFLAGS += -mfentry
 TRAMPOLINE := trampoline-x86-64
 else
-MESSAGE := "machine = other"
-
 TRAMPOLINE := trampoline-aarch64
 endif
 

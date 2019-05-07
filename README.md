@@ -4,8 +4,8 @@ Simple C tracer
 Preparatory investigation for developing a software tracer
 for [ERIKA Enterprise](http://www.erika-enterprise.com).
 
-The tracer is roughly based on the ftrace approach (i.e. mcount function of
-gcc, enabled through the `-pg` option).
+The tracer is roughly based on the ftrace approach (i.e. `__fentry__` function
+of gcc, enabled through the `-pg` option).
 
 Example of usage
 ================

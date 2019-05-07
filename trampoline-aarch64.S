@@ -12,8 +12,14 @@
 _mcount:
 	SAVE_FRAME
 
-        ldr     x2, ctracer_ptr
-        cmp     x2, #0
+	mov	x5, x3
+	mov	x4, x2
+	mov	x3, x1
+	ldr	x2, [sp]
+	ldr	w2, [x2, #28]	// FIXME: need to know the size
+
+        ldr     x6, ctracer_ptr
+        cmp     x6, #0
         b.eq    end
 
 	//str	x2, [x29,#28]
@@ -22,12 +28,11 @@ _mcount:
 	sub	x0, x30, 0x10
 
 	// x1 <- lr
-	ldr     x1, [x29]		// x29 is the frame pointer
+	ldr     x1, [x29]	// x29 is the frame pointer
         ldr     x1, [x1, #8]
 	sub	x1, x1, 4
 
-        ldr     x5, ctracer_ptr
-        blr     x5                      //   calls (*ctracer_ptr)(pc, lr);
+        blr     x6		// calls (*ctracer_ptr)(pc, lr);
 
 end:
 	RESTORE_FRAME

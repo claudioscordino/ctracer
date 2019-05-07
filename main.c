@@ -11,22 +11,22 @@ int func1(int x)
 	return --x;
 }
 
-int func2 (int a)
+int func2 (int a, int b, int c, int d)
 {
-	fprintf(stderr, "Running func2 %p with args %d...\n", func2, a);
-	int b = func1(a);
-	b++;
-	if (b > 10)
-		return b;
+	fprintf(stderr, "Running func2 %p with args %d %d %d %d...\n", func2, a, b, c ,d);
+	int e = func1(a-100+1);
+	e++;
+	if (e > 10)
+		return e;
 	else
-		return --b;
+		return --e;
 }
 
 int func3()
 {
 	fprintf(stderr, "Running func3 %p...\n", func3);
-	func1(1000);
-	func2(200);
+	func1(103);
+	func2(204, 214, 224, 234);
 	return 10;
 }
 
@@ -35,7 +35,7 @@ int main (void)
 {
 	fprintf(stderr, "Running main %p...\n", main);
 	ctracer_enable();
-	func2(100);
+	func2(201, 211, 221, 231);
 	int ret = func3();
 	fprintf(stderr, "func3() returned %d\n", ret);
 	ctracer_disable();

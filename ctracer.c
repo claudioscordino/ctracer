@@ -49,7 +49,7 @@ void trace_dump()
 	for (int i = 0; i < LOG_SIZE; ++i) {
 		if (data[i].type == 0)
 			break;
-		fprintf(fd, "%u\t%lx\t%lx\t%lu\t%lu\t%lu\t%lu\t%lu\n",
+		fprintf(fd, "%u\t0x%lx\t0x%lx\t0x%lx\t0x%lx\t0x%lx\t0x%lx\t%lu\n",
 			data[i].type,
 			data[i].ip,
 			data[i].pip,

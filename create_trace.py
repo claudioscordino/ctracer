@@ -6,9 +6,13 @@ import binascii
 from shutil import which
 import datetime
 
-if len(sys.argv) != 3:
-    sys.stderr.write("Usage: " + sys.argv[0] + " executable datafile.dat\n")
+if len(sys.argv) != 3 and len(sys.argv) != 4:
+    sys.stderr.write("Usage: " + sys.argv[0] + " executable datafile.dat [addr2line-command]\n")
     sys.exit(-1)
+
+addr2line="addr2line"
+if len(sys.argv) == 4:
+    addr2line=sys.argv[3]
 
 version = sys.version_info[0]
 print ("Python version: " + str(version))
@@ -28,6 +32,7 @@ file_out.write("#creationDate " + str(datetime.datetime.utcnow().isoformat()) + 
 file_out.write("#timescale ns\n")
 start = True
 with open(sys.argv[2]) as file_in:
+    # Skip first two lines
     next(file_in)
     next(file_in)
     for line in file_in:
@@ -38,7 +43,7 @@ with open(sys.argv[2]) as file_in:
             start = False
         else:
             file_out.write(time + ",TASK_A,,R," + function + ",,terminate\n")
-        function = subprocess.run(["addr2line -f -e " + sys.argv[1] + " " + address], \
+        function = subprocess.run([addr2line + " -f -e " + sys.argv[1] + " " + address], \
         shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8').split()[0]
         file_out.write(time + ",TASK_A,,R," + function + ",,start\n")
 file_out.write(time + ",TASK_A,,R," + function + ",,terminate\n")

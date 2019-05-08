@@ -16,7 +16,7 @@ _mcount:
 	mov	x4, x2
 	mov	x3, x1
 	ldr	x2, [sp]
-	ldr	w2, [x2, #28]	// FIXME: need to know the size
+	ldr	x2, [x2, #28]
 
         ldr     x6, ctracer_ptr
         cmp     x6, #0

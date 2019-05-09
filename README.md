@@ -15,14 +15,19 @@ containing symbols and timestamps:
 
     ./main
 
-Then, the `create_trace.py` script can convert the trace to the
-[BTF format](https://www.eclipse.org/app4mc/docu/standards/TA_BTF_Specification_2.1.5.pdf),
-that can be viewed through [Eclipse Trace Compass](https://www.eclipse.org/tracecompass/):
+Then, the `create_trace.py` script can convert the trace replacing the
+addresses with the actual function name:
 
     ./create_trace.py ./main trace.dat
+
+will create the `trace.txt` file.
+
+Alternatively, the `create_trace.py` script can convert the trace to the
+[BTF format](https://www.eclipse.org/app4mc/docu/standards/TA_BTF_Specification_2.1.5.pdf),
+that can be viewed through [Eclipse Trace Compass](https://www.eclipse.org/tracecompass/).
+
 
 TODO
 ====
 * Hijack trampoline to be called when the function ends execution
-* Port to aarch64
 * Port to ERIKA Enterprise
